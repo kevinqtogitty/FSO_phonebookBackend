@@ -1,7 +1,12 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 app.use(express.json())
+morgan.token('body', (req) => JSON.stringify(req.body))
+app.use(morgan(':method :url :status :body'))
+
+
 
 let phoneBookEntries = [
     { 
@@ -28,6 +33,7 @@ let phoneBookEntries = [
 
 app.get('/api/persons', (req, res) => {
     res.send(JSON.stringify(phoneBookEntries))
+    
 })
 
 app.get('/info', (req, res) => {
